@@ -1,0 +1,26 @@
+{
+  "name": "mezo-x402",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm -r --parallel dev",
+    "test:e2e": "bash scripts/test-e2e.sh",
+    "test:e2e:testnet": "bash scripts/test-e2e-testnet.sh",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "bufferutil",
+      "esbuild",
+      "keccak",
+      "utf-8-validate"
+    ],
+    "patchedDependencies": {}
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "pnpm@10.7.0",
+  "devDependencies": {}
+}

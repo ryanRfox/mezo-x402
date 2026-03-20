@@ -1,0 +1,20 @@
+{
+  "name": "mezo-x402-client",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "client": "tsx client.ts"
+  },
+  "dependencies": {
+    "@x402/core": "^2.7.0",
+    "@x402/evm": "file:../patches/x402-evm-2.7.0-patched.tgz",
+    "dotenv": "^16.4.5",
+    "mezo-x402-sdk": "workspace:*",
+    "viem": "^2.21.54"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

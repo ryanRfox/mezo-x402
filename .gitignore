@@ -1,0 +1,10 @@
+node_modules/
+dist/
+out/
+cache/
+.env
+*.env.local
+.anvil.env
+.testnet.env
+.env.mezo.testnet
+facilitator.env
