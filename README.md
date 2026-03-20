@@ -131,7 +131,7 @@ Network addresses and contract addresses are pre-filled in the `.env.example` fi
 
 ```
 client/         Payment client (signs Permit2, retries with payment header)
-server/         Humor server (joke paywall) and generic resource server
+server/         Humor server (joke paywall demo)
 facilitator/    x402 facilitator (verify + settle endpoints)
 sdk/            mezo-x402-sdk: Mezo chain definitions, mUSD config
 patches/        Patched @x402/evm with PROXY_ADDRESS env override

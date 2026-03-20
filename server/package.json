@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "server": "tsx server.ts",
     "humor": "tsx humor-server.ts",
-    "dev": "tsx watch server.ts",
     "humor:dev": "tsx watch humor-server.ts"
   },
   "dependencies": {

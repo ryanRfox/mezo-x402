@@ -4,11 +4,7 @@
  * GET /joke  — setup is free; pay mUSD to unlock the punchline
  * POST /add  — add a new joke to the flat-file DB (free)
  *
- * Usage:
- *   source ../.env.mezo.testnet && tsx humor-server.ts
- *
- * Usage (local anvil):
- *   source ../.anvil.env && tsx humor-server.ts
+ * Usage: cp .env.example .env && npx tsx humor-server.ts
  */
 
 import { HTTPFacilitatorClient } from "@x402/core/http";

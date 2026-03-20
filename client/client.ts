@@ -1,10 +1,7 @@
 /**
  * Mezo x402 Client — pays for paywalled resources using mUSD via permit2.
  *
- * Usage:
- *   source ../.anvil.env && tsx client.ts
- *   # or for testnet:
- *   source ../.env.mezo.testnet && tsx client.ts
+ * Usage: cp .env.example .env && npx tsx client.ts
  */
 
 import { x402Client, x402HTTPClient } from "@x402/core/client";
@@ -18,7 +15,7 @@ import { PERMIT2_ADDRESS } from "@x402/evm";
 
 dotenv.config();
 
-const RESOURCE_URL = process.env.RESOURCE_URL || "http://localhost:3000/premium";
+const RESOURCE_URL = process.env.RESOURCE_URL || "http://localhost:3000/joke";
 const NETWORK = process.env.NETWORK || "eip155:31337";
 const RPC_URL = process.env.RPC_URL || process.env.MEZO_RPC_URL || "http://127.0.0.1:8545";
 const MUSD_ADDRESS = process.env.MUSD_ADDRESS as `0x${string}` | undefined;

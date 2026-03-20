@@ -27,11 +27,6 @@ export const MUSD_CONFIG = {
 } as const;
 
 /**
- * Default facilitator pool URL.
- */
-export const FACILITATOR_POOL_URL = "https://x402.mezo.org" as const;
-
-/**
  * x402 stablecoin map entries for Mezo networks.
  * These can be added to the server scheme's stablecoin map.
  */

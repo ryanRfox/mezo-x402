@@ -15,12 +15,10 @@
       "esbuild",
       "keccak",
       "utf-8-validate"
-    ],
-    "patchedDependencies": {}
+    ]
   },
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "pnpm@10.7.0",
-  "devDependencies": {}
+  "packageManager": "pnpm@10.7.0"
 }
