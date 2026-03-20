@@ -4,16 +4,19 @@
  * Usage: cp .env.example .env && npx tsx client.ts
  */
 
+// These two side-effect imports MUST come before @x402/evm:
+// 1. preload: polyfills globalThis.crypto for Node < 20 / tsx CJS mode
+// 2. dotenv/config: loads .env so PROXY_ADDRESS is set when SDK reads it at module-load time
+import "./preload.js";
+import "dotenv/config";
+
 import { x402Client, x402HTTPClient } from "@x402/core/client";
 import { ExactEvmScheme } from "@x402/evm/exact/client";
 import { toClientEvmSigner } from "@x402/evm";
-import dotenv from "dotenv";
 import { createPublicClient, http, erc20Abi } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 import { getMezoChain } from "mezo-x402-sdk";
 import { PERMIT2_ADDRESS } from "@x402/evm";
-
-dotenv.config();
 
 const RESOURCE_URL = process.env.RESOURCE_URL || "http://localhost:3000/joke";
 const NETWORK = process.env.NETWORK || "eip155:31337";
