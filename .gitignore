@@ -8,3 +8,4 @@ cache/
 .testnet.env
 .env.mezo.testnet
 facilitator.env
+*.log
