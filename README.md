@@ -63,6 +63,8 @@ cd server && npx tsx humor-server.ts
 
 **Terminal 3 — Client** (pays for a joke)
 
+> **First run?** Complete the [Permit2 Approval](#permit2-approval) step below before running the client.
+
 ```bash
 cd client && npx tsx client.ts
 ```
@@ -79,11 +81,11 @@ The x402 flow uses three wallets:
 | **Payee** | Receives mUSD payments | None |
 | **Client** | Signs Permit2 authorizations | Testnet mUSD + BTC (Permit2 approval) |
 
-Get testnet funds from the [Mezo Discord](https://discord.gg/mezo) faucet channels.
+Get testnet funds from the [Mezo Faucet](https://faucet.test.mezo.org).
 
 ### Wallet Setup
 
-If you don't already have an EVM wallet, generate one:
+If you don't already have an EVM wallet, generate one with [Foundry](https://github.com/foundry-rs/foundry):
 
 ```bash
 cast wallet new
@@ -97,7 +99,7 @@ Private keys are hex strings with a `0x` prefix (e.g., `0xac0974...`). Each `.en
 - **Facilitator wallet** needs testnet BTC (for gas on `settle()` transactions).
 - **Payee** is just an address — no funding needed.
 
-Request testnet tokens from the faucet channels in the [Mezo Discord](https://discord.gg/mezo).
+Request testnet tokens from the [Mezo Faucet](https://faucet.test.mezo.org).
 
 ### Permit2 Approval
 
