@@ -33,6 +33,8 @@ pnpm install
 pnpm --filter mezo-x402-sdk build
 ```
 
+> **Note:** You may see a `keccak` node-gyp warning during `pnpm install` — this is safe to ignore. The WASM fallback is used automatically.
+
 Copy `.env.example` to `.env` in each service directory and fill in your wallet keys:
 
 ```bash
@@ -40,6 +42,7 @@ cp facilitator/.env.example facilitator/.env
 cp server/.env.example server/.env
 cp client/.env.example client/.env
 # Edit each .env file — add private keys and payee address
+# Private keys are hex strings with 0x prefix, e.g.: 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
 ```
 
 Then open three terminals:
@@ -78,6 +81,42 @@ The x402 flow uses three wallets:
 
 Get testnet funds from the [Mezo Discord](https://discord.gg/mezo) faucet channels.
 
+### Wallet Setup
+
+If you don't already have an EVM wallet, generate one:
+
+```bash
+cast wallet new
+# Or use MetaMask / any EVM wallet — export the private key from settings
+```
+
+Private keys are hex strings with a `0x` prefix (e.g., `0xac0974...`). Each `.env.example` shows which key or address is needed.
+
+**Funding requirements:**
+- **Client wallet** needs testnet mUSD (to pay for resources) and a small amount of testnet BTC (for the one-time Permit2 approval transaction).
+- **Facilitator wallet** needs testnet BTC (for gas on `settle()` transactions).
+- **Payee** is just an address — no funding needed.
+
+Request testnet tokens from the faucet channels in the [Mezo Discord](https://discord.gg/mezo).
+
+### Permit2 Approval
+
+Before the client can pay, the Permit2 contract must be approved to transfer mUSD on behalf of the client wallet. This is a standard ERC-20 `approve()` — a one-time on-chain transaction that costs a small amount of testnet BTC for gas.
+
+```bash
+# Approve Permit2 to spend your mUSD (one-time, from client wallet)
+cast send 0x118917a40FAF1CD7a13dB0Ef56C86De7973Ac503 \
+  "approve(address,uint256)" \
+  0x000000000022D473030F116dDEE9F6B43aC78BA3 \
+  $(cast max-uint) \
+  --private-key $CLIENT_PRIVATE_KEY \
+  --rpc-url https://rpc.test.mezo.org
+```
+
+After approval, the x402 payment flow works automatically: the client signs a Permit2 EIP-712 message (off-chain, no gas), and the facilitator calls `transferFrom` via the x402 proxy to settle on-chain.
+
+> **Tip:** The client logs a warning at startup if Permit2 is not yet approved.
+
 Each service has its own `.env.example` — copy to `.env` and fill in wallet keys:
 
 | Service | Key vars to fill in |
@@ -86,7 +125,7 @@ Each service has its own `.env.example` — copy to `.env` and fill in wallet ke
 | `server/.env` | `PAYEE_ADDRESS` |
 | `client/.env` | `CLIENT_PRIVATE_KEY` |
 
-Network addresses and contract addresses are pre-filled in the `.env.example` files. A monolithic `.env.mezo.testnet.example` is also available for deploy/test scripts.
+Network addresses and contract addresses are pre-filled in the `.env.example` files.
 
 ## Project Structure
 
@@ -96,7 +135,6 @@ server/         Humor server (joke paywall) and generic resource server
 facilitator/    x402 facilitator (verify + settle endpoints)
 sdk/            mezo-x402-sdk: Mezo chain definitions, mUSD config
 patches/        Patched @x402/evm with PROXY_ADDRESS env override
-scripts/        E2E test scripts (anvil + testnet)
 ```
 
 See each component directory (`facilitator/`, `server/`, `client/`) for per-service setup details and environment variable reference.
