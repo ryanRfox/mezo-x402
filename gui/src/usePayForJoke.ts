@@ -10,7 +10,7 @@ import { mezoTestnet } from "./config";
 const HUMOR_SERVER_URL =
   import.meta.env.VITE_HUMOR_SERVER_URL || "";
 
-export const GUI_VERSION = "0.3.0";
+export const GUI_VERSION = "0.3.1";
 
 type PaymentState =
   | { status: "idle" }
@@ -42,9 +42,8 @@ export function usePayForJoke() {
       client.register("eip155:*", new ExactEvmScheme(signer));
 
       setState({ status: "settling" });
-      console.log("[x402] Calling wrapFetchWithPayment...");
-
       const fetchWithPay = wrapFetchWithPayment(fetch, client);
+      console.log("[x402] Fetching /joke (x402-aware, will handle 402 automatically)...");
       const response = await fetchWithPay(`${HUMOR_SERVER_URL}/joke`);
 
       console.log("[x402] Response status:", response.status);
