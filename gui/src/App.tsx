@@ -109,7 +109,8 @@ function JokeCard() {
     <div className="joke-card">
       {state.status === "idle" && (
         <button className="btn pay" data-testid="pay-button" onClick={pay}>
-          Pay 0.001 mUSD for a Joke
+          <span className="pay-label">Unlock the Punchline</span>
+          <span className="pay-price">0.001 mUSD</span>
         </button>
       )}
 
@@ -178,7 +179,7 @@ export function App() {
       <header>
         <div className="header-brand">
           <img src="/brand/mezo-logo.svg" alt="Mezo" width={32} height={32} />
-          <span>x402 Demo</span>
+          <span>Mezo x402 Humor Server</span>
         </div>
         {isConnected ? (
           <button onClick={() => disconnect()} className="btn disconnect">
@@ -201,7 +202,22 @@ export function App() {
             <JokeCard />
           </>
         ) : (
-          <p className="hint">Connect your wallet to get started.</p>
+          <div className="hero">
+            <h1 className="hero-headline">Pay-Per-Punchline</h1>
+            <p className="hero-tagline">The setup is free. The punchline costs 0.001 mUSD.</p>
+            <p className="hero-explainer">
+              This demo showcases x402 — the HTTP payment protocol. Connect your wallet,
+              pay a fraction of a cent in mUSD on Mezo, and unlock a bitcoin joke.
+              Each payment settles on-chain via Permit2.
+            </p>
+            <button
+              className="btn pay hero-cta"
+              onClick={() => setShowWalletModal(true)}
+            >
+              Connect Wallet
+            </button>
+            <p className="hero-testnet">Mezo Testnet · No real funds required</p>
+          </div>
         )}
       </main>
 
