@@ -11,6 +11,7 @@
 import { paymentMiddleware, x402ResourceServer } from "@x402/express";
 import { ExactEvmScheme } from "@x402/evm/exact/server";
 import { HTTPFacilitatorClient } from "@x402/core/server";
+import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import { readFileSync, writeFileSync } from "fs";
@@ -54,6 +55,10 @@ function appendJoke(joke: Joke): void {
 const facilitatorClient = new HTTPFacilitatorClient({ url: FACILITATOR_URL });
 
 const app = express();
+app.use(cors({
+  origin: "*",
+  exposedHeaders: ["PAYMENT-REQUIRED", "PAYMENT-RESPONSE", "PAYMENT-SIGNATURE"],
+}));
 app.use(express.json());
 
 // x402 payment middleware — mirrors upstream @x402/express pattern

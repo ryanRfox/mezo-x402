@@ -10,11 +10,13 @@
     "@x402/core": "^2.7.0",
     "@x402/evm": "^2.7.0",
     "@x402/express": "^2.7.0",
+    "cors": "^2.8.6",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "viem": "^2.21.54"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/express": "^4.17.21",
     "@types/node": "^22.10.1",
     "tsx": "^4.19.2",

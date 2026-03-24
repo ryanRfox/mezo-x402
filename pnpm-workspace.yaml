@@ -2,3 +2,4 @@ packages:
   - facilitator
   - client
   - server
+  - gui
