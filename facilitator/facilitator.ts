@@ -11,6 +11,7 @@ import { toFacilitatorEvmSigner } from "@x402/evm";
 import { ExactEvmScheme } from "@x402/evm/exact/facilitator";
 import dotenv from "dotenv";
 import express from "express";
+import { registerLeaderboard } from "./leaderboard.js";
 import { type Chain, createWalletClient, http, publicActions } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 
@@ -135,6 +136,9 @@ app.post("/close", (_req, res) => {
   console.log("Received shutdown request");
   setTimeout(() => process.exit(0), 100);
 });
+
+// Leaderboard routes (/ redirect, /leaderboard, /leaderboard/data)
+registerLeaderboard(app, NETWORK, RPC_URL);
 
 app.listen(parseInt(PORT), () => {
   console.log(`Mezo x402 Facilitator listening on port ${PORT}`);
