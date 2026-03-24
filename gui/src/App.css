@@ -451,3 +451,11 @@ header {
     opacity: 0.5;
   }
 }
+
+.version-stamp {
+  text-align: center;
+  padding: 2rem 0 1rem;
+  font-size: 11px;
+  color: #ccc;
+  font-family: monospace;
+}

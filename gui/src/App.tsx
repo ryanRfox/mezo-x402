@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useAccount, useBalance, useConnect, useDisconnect, useReadContract } from "wagmi";
 import { erc20Abi, formatUnits } from "viem";
 import { MUSD_ADDRESS, PERMIT2_ADDRESS, EXPLORER_URL, mezoTestnet } from "./config";
-import { usePayForJoke } from "./usePayForJoke";
+import { usePayForJoke, GUI_VERSION } from "./usePayForJoke";
 import { usePermit2Approval } from "./usePermit2Approval";
 
 function WalletInfo() {
@@ -243,6 +243,7 @@ export function App() {
           </div>
         </div>
       )}
+      <footer className="version-stamp">v{GUI_VERSION}</footer>
     </div>
   );
 }
