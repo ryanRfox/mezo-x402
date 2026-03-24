@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAccount, useBalance, useConnect, useDisconnect, useReadContract } from "wagmi";
 import { erc20Abi, formatUnits } from "viem";
 import { MUSD_ADDRESS, PERMIT2_ADDRESS, EXPLORER_URL, mezoTestnet } from "./config";
@@ -42,10 +42,10 @@ function WalletInfo() {
   const decimals = musdDecimals ?? 18;
   const formattedMusd = musdBalance !== undefined
     ? formatUnits(musdBalance, decimals)
-    : "—";
+    : "\u2014";
   const formattedBtc = btcBalance
     ? `${Number(btcBalance.formatted).toFixed(6)} ${btcBalance.symbol}`
-    : "—";
+    : "\u2014";
   const hasPermit2Approval = permit2Allowance !== undefined && permit2Allowance > 0n;
 
   return (
@@ -59,7 +59,7 @@ function WalletInfo() {
           className="value address"
           data-testid="wallet-address"
         >
-          {address ? `${address.slice(0, 6)}...${address.slice(-4)}` : "—"}
+          {address ? `${address.slice(0, 6)}...${address.slice(-4)}` : "\u2014"}
         </a>
       </div>
       <div className="info-row">
@@ -74,7 +74,7 @@ function WalletInfo() {
         <span className="label">Permit2 Allowance</span>
         <span className={`value ${hasPermit2Approval ? "approved" : "not-approved"}`}>
           {permit2Allowance === undefined
-            ? "—"
+            ? "\u2014"
             : hasPermit2Approval
               ? "Approved"
               : "Not Approved"}
@@ -149,10 +149,11 @@ function JokeCard() {
 }
 
 export function App() {
-  const { isConnected } = useAccount();
+  const { isConnected, address } = useAccount();
   const { connectors, connect } = useConnect();
   const { disconnect } = useDisconnect();
   const autoConnectRef = useRef(false);
+  const [showWalletModal, setShowWalletModal] = useState(false);
 
   // Auto-connect in test mode (VITE_TEST_MODE=true)
   useEffect(() => {
@@ -168,26 +169,28 @@ export function App() {
     }
   }, [isConnected, connectors, connect]);
 
+  const truncatedAddress = address
+    ? `${address.slice(0, 6)}...${address.slice(-4)}`
+    : "";
+
   return (
     <div className="app">
       <header>
-        <h1>Mezo x402 Demo</h1>
+        <div className="header-brand">
+          <img src="/brand/mezo-logo.svg" alt="Mezo" width={32} height={32} />
+          <span>x402 Demo</span>
+        </div>
         {isConnected ? (
           <button onClick={() => disconnect()} className="btn disconnect">
-            Disconnect
+            {truncatedAddress}
           </button>
         ) : (
-          <div className="connectors">
-            {connectors.map((connector) => (
-              <button
-                key={connector.uid}
-                onClick={() => connect({ connector, chainId: mezoTestnet.id })}
-                className="btn connect"
-              >
-                Connect {connector.name}
-              </button>
-            ))}
-          </div>
+          <button
+            onClick={() => setShowWalletModal(true)}
+            className="btn connect"
+          >
+            Connect Wallet
+          </button>
         )}
       </header>
 
@@ -201,6 +204,29 @@ export function App() {
           <p className="hint">Connect your wallet to get started.</p>
         )}
       </main>
+
+      {showWalletModal && (
+        <div className="wallet-modal-overlay" onClick={() => setShowWalletModal(false)}>
+          <div className="wallet-modal" onClick={(e) => e.stopPropagation()}>
+            <h3>Connect a Wallet</h3>
+            {connectors.filter((c) => c.name !== "Injected").map((connector) => (
+              <button
+                key={connector.uid}
+                className="wallet-option"
+                onClick={() => {
+                  connect({ connector, chainId: mezoTestnet.id });
+                  setShowWalletModal(false);
+                }}
+              >
+                {connector.icon && (
+                  <img src={connector.icon} alt={connector.name} />
+                )}
+                {connector.name}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
