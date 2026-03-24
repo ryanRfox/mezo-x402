@@ -8,12 +8,10 @@
   },
   "dependencies": {
     "@x402/core": "^2.7.0",
-    "@x402/evm": "file:../patches/x402-evm-2.7.0-patched.tgz",
+    "@x402/evm": "^2.7.0",
     "@x402/express": "^2.7.0",
-    "@x402/paywall": "^2.5.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "mezo-x402-sdk": "workspace:*",
     "viem": "^2.21.54"
   },
   "devDependencies": {

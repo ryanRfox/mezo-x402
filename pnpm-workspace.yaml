@@ -1,5 +1,4 @@
 packages:
-  - sdk
   - facilitator
   - client
   - server
