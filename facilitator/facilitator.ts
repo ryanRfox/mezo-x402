@@ -2,7 +2,7 @@
  * Mezo x402 Facilitator
  *
  * Standalone Express facilitator mirroring the upstream @x402/core pattern.
- * Registers ExactEvmScheme for eip155:31611 with EIP-2612 gas sponsoring.
+ * Registers ExactEvmScheme for eip155:31611.
  */
 
 import { x402Facilitator } from "@x402/core/facilitator";
@@ -17,6 +17,7 @@ import { privateKeyToAccount } from "viem/accounts";
 dotenv.config();
 
 // Mezo Testnet chain definition (viem doesn't have it yet)
+// TODO: Duplicate of gui/src/config.ts mezoTestnet — not worth extracting to shared module for a demo
 const mezoTestnet = {
   id: 31611,
   name: "Mezo Testnet",
@@ -40,7 +41,7 @@ const mezoTestnet = {
 } as const satisfies Chain;
 
 const PORT = process.env.PORT || "4022";
-const NETWORK: Network = "eip155:31611";
+const NETWORK = (process.env.NETWORK || "eip155:31611") as Network;
 const RPC_URL = process.env.MEZO_RPC_URL || "https://rpc.test.mezo.org";
 
 if (!process.env.FACILITATOR_PRIVATE_KEY) {
@@ -58,7 +59,14 @@ console.info(`RPC: ${RPC_URL}`);
 const evmSigner = toFacilitatorEvmSigner({
   address: account.address,
   readContract: (args) => viemClient.readContract({ ...args, args: args.args || [] }),
-  verifyTypedData: (args) => viemClient.verifyTypedData(args as any),
+  verifyTypedData: (args: {
+    address: `0x${string}`;
+    domain: Record<string, unknown>;
+    types: Record<string, unknown>;
+    primaryType: string;
+    message: Record<string, unknown>;
+    signature: `0x${string}`;
+  }) => viemClient.verifyTypedData(args as any),
   writeContract: (args) => viemClient.writeContract({ ...args, args: args.args || [] }),
   sendTransaction: (args) => viemClient.sendTransaction(args),
   waitForTransactionReceipt: (args) => viemClient.waitForTransactionReceipt(args),
@@ -68,9 +76,6 @@ const evmSigner = toFacilitatorEvmSigner({
 // Initialize facilitator with ExactEvmScheme
 const facilitator = new x402Facilitator();
 facilitator.register(NETWORK, new ExactEvmScheme(evmSigner));
-
-// Register EIP-2612 gas sponsoring extension (mUSD supports EIP-2612 permit)
-facilitator.registerExtension({ key: "eip2612GasSponsoring" });
 
 // Express app
 const app = express();
@@ -138,5 +143,4 @@ app.listen(parseInt(PORT), () => {
   console.log(`  GET  /supported`);
   console.log(`  GET  /health`);
   console.log(`  POST /close`);
-  console.log("Facilitator listening");
 });

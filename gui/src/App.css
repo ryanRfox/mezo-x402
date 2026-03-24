@@ -1,0 +1,207 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #0a0a0a;
+  color: #e0e0e0;
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid #333;
+  border-radius: 6px;
+  background: #1a1a1a;
+  color: #e0e0e0;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.btn:hover {
+  background: #252525;
+}
+
+.btn.connect {
+  border-color: #f7931a;
+  color: #f7931a;
+}
+
+.btn.disconnect {
+  border-color: #666;
+}
+
+.connectors {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.wallet-info {
+  background: #141414;
+  border: 1px solid #222;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.625rem 0;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.info-row:last-of-type {
+  border-bottom: none;
+}
+
+.label {
+  color: #888;
+  font-size: 0.875rem;
+}
+
+.value {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.value.address {
+  color: #f7931a;
+  text-decoration: none;
+}
+
+.value.address:hover {
+  text-decoration: underline;
+}
+
+.value.approved {
+  color: #4caf50;
+}
+
+.value.not-approved {
+  color: #ff9800;
+}
+
+.warning {
+  margin-top: 0.75rem;
+  padding: 0.625rem;
+  background: rgba(255, 152, 0, 0.1);
+  border: 1px solid rgba(255, 152, 0, 0.3);
+  border-radius: 6px;
+  color: #ff9800;
+  font-size: 0.8125rem;
+}
+
+.hint {
+  color: #666;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.joke-card {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.btn.pay {
+  border-color: #f7931a;
+  color: #f7931a;
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+}
+
+.btn.approve {
+  border-color: #ff9800;
+  color: #ff9800;
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.approval-prompt {
+  color: #ff9800;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+}
+
+.status {
+  color: #888;
+  padding: 1rem 0;
+}
+
+.joke-result {
+  background: #141414;
+  border: 1px solid #222;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.joke-result .setup {
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.joke-result .punchline {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #f7931a;
+  margin-bottom: 1rem;
+}
+
+.tx-link {
+  display: block;
+  color: #888;
+  font-size: 0.8125rem;
+  margin-bottom: 1rem;
+}
+
+.tx-link:hover {
+  color: #f7931a;
+}
+
+.btn.another {
+  border-color: #f7931a;
+  color: #f7931a;
+}
+
+.btn.retry {
+  border-color: #666;
+}
+
+.error {
+  background: rgba(244, 67, 54, 0.1);
+  border: 1px solid rgba(244, 67, 54, 0.3);
+  border-radius: 8px;
+  padding: 1rem;
+  color: #f44336;
+}
+
+.error p {
+  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+}

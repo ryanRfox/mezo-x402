@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "pnpm -r build",
+    "build:render": "pnpm --filter mezo-x402-sdk build && pnpm --filter mezo-x402-gui build",
     "dev": "pnpm -r --parallel dev",
     "test:e2e": "bash scripts/test-e2e.sh",
     "test:e2e:testnet": "bash scripts/test-e2e-testnet.sh",
